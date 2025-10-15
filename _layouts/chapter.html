@@ -2,17 +2,18 @@
 layout: base
 ---
 {%- assign s = site.stories | where: 'slug', page.story | first -%}
+
+{%- assign current = page.chapter | plus: 0 -%}
+{%- assign prev_num = current | minus: 1 -%}
+{%- assign next_num = current | plus: 1 -%}
+
 {%- assign siblings = site.chapters | where: 'story', page.story -%}
 
-{%- assign prev = siblings
-  | where_exp: 'it', 'it.chapter < page.chapter'
-  | sort: 'chapter'
-  | last -%}
+{%- assign prev_ch = siblings | where: 'chapter', prev_num | first -%}
+{%- assign next_ch = siblings | where: 'chapter', next_num | first -%}
 
-{%- assign next = siblings
-  | where_exp: 'it', 'it.chapter > page.chapter'
-  | sort: 'chapter'
-  | first -%}
+{%- if prev_ch and prev_ch.url == page.url -%}{%- assign prev_ch = nil -%}{%- endif -%}
+{%- if next_ch and next_ch.url == page.url -%}{%- assign next_ch = nil -%}{%- endif -%}
 
 <article class="chapter">
   <header class="chapter-header">
@@ -34,16 +35,16 @@ layout: base
     </nav>
   {% else %}
     <nav class="chapter-nav">
-      {% if prev %}
-        <a class="button" href="{{ prev.url | relative_url }}" rel="prev">← Previous</a>
+      {% if prev_ch %}
+        <a class="button" href="{{ prev_ch.url | relative_url }}" rel="prev">← Previous</a>
       {% else %}
         <span class="button disabled">← Previous</span>
       {% endif %}
   
       <a class="button ghost" href="{{ s.url | relative_url }}">Back to story</a>
   
-      {% if next %}
-        <a class="button" href="{{ next.url | relative_url }}" rel="next">Next →</a>
+      {% if next_ch %}
+        <a class="button" href="{{ next_ch.url | relative_url }}" rel="next">Next →</a>
       {% else %}
         <span class="button disabled">Next →</span>
       {% endif %}
