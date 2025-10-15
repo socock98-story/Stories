@@ -99,6 +99,10 @@ select{
 .prose{ max-width: var(--maxw); margin: 0 auto; }
 .prose img{ display:block; margin: 14px auto; max-width:100%; border-radius:10px; }
 
+/* When there's only one button (one-shot), center it nicely */
+.chapter-nav:only-child,
+.chapter-nav.single { justify-content: center; }
+
 .chapter-nav{
   display:flex; justify-content:space-between; align-items:center; gap:8px;
   margin-top:16px;
