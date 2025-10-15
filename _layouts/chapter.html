@@ -2,13 +2,19 @@
 layout: base
 ---
 {%- assign s = site.stories | where: 'slug', page.story | first -%}
-{%- assign chapters = site.chapters | where: 'story', page.story | sort: 'posted_at' | reverse -%}
+
+/* Sort by numeric chapter so neighbors are obvious */
+{%- assign chapters_by_num = site.chapters | where: 'story', page.story | sort: 'chapter' -%}
+
+/* Find current index */
 {%- assign idx = 0 -%}
-{%- for c in chapters -%}
+{%- for c in chapters_by_num -%}
   {%- if c.url == page.url -%}{%- assign idx = forloop.index0 -%}{%- endif -%}
 {%- endfor -%}
-{%- assign prev = chapters[idx | plus: 1] -%}
-{%- assign next = chapters[idx | minus: 1] -%}
+
+/* Neighbors (prev is lower number, next is higher number) */
+{%- assign prev = chapters_by_num[idx | minus: 1] -%}
+{%- assign next = chapters_by_num[idx | plus: 1] -%}
 
 <article class="chapter">
   <header class="chapter-header">
