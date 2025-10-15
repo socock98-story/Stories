@@ -1,7 +1,7 @@
 title: "Stories"
 description: "Personal story collection"
-baseurl: ""
-url: ""
+url: "https://socock98-story.github.io"
+baseurl: "/Stories"
 
 # Collections
 collections:
