@@ -5,7 +5,7 @@ slug: "last-ride"
 type: "series"
 genre: "College"
 tags: ["romance","straight to gay", "first time", "frat", "big cock", "jock"]
-cover: "/assets/covers/last-ride.jpg"
+cover: "/assets/covers/last-ride.png"
 summary: "When a straight pledge gets tangled up with the sexy frat president."
 permalink: /stories/last-ride/
 ---
