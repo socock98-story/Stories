@@ -1,7 +1,7 @@
 ---
 layout: story
 title: "Meeting some Military guys while Camping"
-slug: "last-ride"
+slug: "camping-military-guys"
 type: "one-shot"
 genre: "Camping"
 tags: ["military","straight to gay", "first time", "group", "big cock", "hunk", "outdoor", "breeding"]
