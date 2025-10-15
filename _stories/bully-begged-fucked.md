@@ -2,7 +2,7 @@
 layout: story
 title: "The Bully who Begged to be Fucked"
 slug: "bully-begged-fucked"
-type: "series"
+type: "one-shot"
 genre: "High School"
 tags: ["bully","straight to gay", "first time", "anal", "jock"]
 cover: "/assets/covers/bully-begged-fucked.png"
