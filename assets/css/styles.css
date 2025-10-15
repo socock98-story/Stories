@@ -64,7 +64,7 @@ select{
 .pill.genre{ color:#b0f1da; border-color:#2f544a; }
 .pill.tag{ color:#ffd9a8; border-color:#56452f; }
 
-.story-title { font-family: Lora, Georgia, serif; margin:2px 0 0 0; font-size:1.35rem; }
+.story-title { font-family: Lora, Georgia, serif; margin:2px 0 5px 0; font-size:1.35rem; }
 .story-title a { color: var(--text); text-decoration:none; }
 .summary { color: var(--muted); margin: 0; }
 .meta { display:flex; gap:10px; align-items:center; color: var(--muted); font-size:.9rem; }
