@@ -16,6 +16,16 @@
   if(list){
     var cards = Array.from(list.querySelectorAll('.story-card'));
 
+    function sortAllCardsDesc() {
+      cards.sort(function(a, b){
+        var ta = new Date(a.dataset.latest || 0).getTime();
+        var tb = new Date(b.dataset.latest || 0).getTime();
+        return tb - ta; // newest first
+      });
+      // Re-attach in sorted order
+      cards.forEach(function(c){ list.appendChild(c); });
+    }
+
     // NEW badge on cards
     cards.forEach(function(card){
       var latest = card.getAttribute('data-latest');
@@ -73,14 +83,23 @@
         card._visible = ok;
       });
 
-      // reset pagination for the new filtered set
-      var totalVisible = cards.filter(function(c){ return c._visible !== false; }).length;
+      // Reorder only the visible ones (newest first)
+      var visibleCards = cards.filter(function(c){ return c._visible !== false; });
+      visibleCards.sort(function(a, b){
+        var ta = new Date(a.dataset.latest || 0).getTime();
+        var tb = new Date(b.dataset.latest || 0).getTime();
+        return tb - ta;
+      });
+      visibleCards.forEach(function(c){ list.appendChild(c); });
+      
+      // Reset pagination to the first batch of the (now) sorted visible list
+      var totalVisible = visibleCards.length;
       visibleCount = Math.min(BATCH, totalVisible);
-
       renderVisible();
     }
 
     // initial render
+    sortAllCardsDesc();
     renderVisible();
 
     loadMoreBtn && loadMoreBtn.addEventListener('click', function(){
