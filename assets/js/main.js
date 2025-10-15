@@ -16,6 +16,7 @@
   if(list){
     var cards = Array.from(list.querySelectorAll('.story-card'));
 
+    // NEW badge on cards
     cards.forEach(function(card){
       var latest = card.getAttribute('data-latest');
       var badge = card.querySelector('.badge.new');
@@ -23,14 +24,26 @@
         if(isNew(latest)) badge.classList.remove('hidden');
         else badge.classList.add('hidden');
       }
+      // default visibility
+      card._visible = true;
     });
 
     var BATCH = 12, visibleCount = Math.min(BATCH, cards.length);
+
     function renderVisible(){
+      // hide all non-matching
+      cards.forEach(function(c){
+        if(c._visible === false){
+          c.style.display = 'none';
+        }
+      });
+
+      // show only the first `visibleCount` matching
       var visibleCards = cards.filter(function(c){ return c._visible !== false; });
       visibleCards.forEach(function(c, i){
-        c.style.display = (i < visibleCount) ? "" : "none";
+        c.style.display = (i < visibleCount) ? '' : 'none';
       });
+
       if(visibleCount >= visibleCards.length) loadMoreBtn && loadMoreBtn.classList.add('hidden');
       else loadMoreBtn && loadMoreBtn.classList.remove('hidden');
     }
@@ -42,30 +55,36 @@
 
       cards.forEach(function(card){
         var ok = true;
-        var title = card.dataset.title || "";
-        var summary = card.dataset.summary || "";
-        var genre = card.dataset.genre || "";
-        var tags = card.dataset.tags || "";
+        var title = (card.dataset.title || "");
+        var summary = (card.dataset.summary || "");
+        var genre = (card.dataset.genre || "");
+        var tagsStr = (card.dataset.tags || "");
+        var tags = tagsStr.split(',').map(function(s){ return s.trim(); });
+
         if(q){
-          ok = title.includes(q) || summary.includes(q) || genre.includes(q) || tags.includes(q);
+          ok = title.includes(q) || summary.includes(q) || genre.includes(q) || tagsStr.includes(q);
         }
         if(ok && g){
           ok = (genre === g);
         }
         if(ok && t){
-          ok = tags.split(',').includes(t);
+          ok = tags.includes(t);
         }
         card._visible = ok;
       });
 
-      visibleCount = Math.min(BATCH, cards.filter(function(c){return c._visible !== false;}).length);
+      // reset pagination for the new filtered set
+      var totalVisible = cards.filter(function(c){ return c._visible !== false; }).length;
+      visibleCount = Math.min(BATCH, totalVisible);
+
       renderVisible();
     }
 
+    // initial render
     renderVisible();
 
     loadMoreBtn && loadMoreBtn.addEventListener('click', function(){
-      var visibleCards = cards.filter(function(c){return c._visible !== false;});
+      var visibleCards = cards.filter(function(c){ return c._visible !== false; });
       visibleCount = Math.min(visibleCards.length, visibleCount + BATCH);
       renderVisible();
     });
@@ -75,6 +94,7 @@
     tagFilter && tagFilter.addEventListener('change', applyFilters);
   }
 
+  // NEW badges on chapter list
   var chapterItems = Array.from(document.querySelectorAll('.chapter-item'));
   chapterItems.forEach(function(item){
     var iso = item.getAttribute('data-posted');
