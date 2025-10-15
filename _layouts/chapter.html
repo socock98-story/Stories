@@ -24,19 +24,25 @@ layout: base
     {{ content }}
   </div>
 
+  {% if s.type == "one-shot" %}
   <nav class="chapter-nav">
-    {%- if prev -%}
+    <a class="button ghost" href="{{ '/' | relative_url }}">Back to home</a>
+  </nav>
+{% else %}
+  <nav class="chapter-nav">
+    {% if prev %}
       <a class="button" href="{{ prev.url | relative_url }}">← Previous</a>
-    {%- else -%}
+    {% else %}
       <span class="button disabled">← Previous</span>
-    {%- endif -%}
+    {% endif %}
 
     <a class="button ghost" href="{{ s.url | relative_url }}">Back to story</a>
 
-    {%- if next -%}
+    {% if next %}
       <a class="button" href="{{ next.url | relative_url }}">Next →</a>
-    {%- else -%}
+    {% else %}
       <span class="button disabled">Next →</span>
-    {%- endif -%}
+    {% endif %}
   </nav>
+{% endif %}
 </article>
