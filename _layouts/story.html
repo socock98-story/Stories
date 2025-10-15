@@ -1,0 +1,41 @@
+---
+layout: base
+---
+{%- assign s = page -%}
+{%- assign chapters = site.chapters | where: 'story', s.slug | sort: 'posted_at' | reverse -%}
+
+<section class="story-hero">
+  <img class="cover big" src="{{ s.cover | relative_url }}" alt="Cover of {{ s.title }}">
+  <div class="hero-body">
+    <div class="pill-row">
+      <span class="pill type">{{ s.type }}</span>
+      {%- if s.genre -%}<span class="pill genre">{{ s.genre }}</span>{%- endif -%}
+      {%- for tag in s.tags -%}<span class="pill tag">{{ tag }}</span>{%- endfor -%}
+    </div>
+    <h1 class="story-title">{{ s.title }}</h1>
+    <p class="summary">{{ s.summary }}</p>
+  </div>
+</section>
+
+{%- if s.type == "series" -%}
+<section class="chapter-list">
+  <h2>Chapters</h2>
+  <ul>
+    {%- for ch in chapters -%}
+      <li class="chapter-item" data-posted="{{ ch.posted_at | date_to_xmlschema }}">
+        <div class="chapter-line">
+          <a href="{{ ch.url | relative_url }}">Chapter {{ ch.chapter }}</a>
+          <span class="posted">{{ ch.posted_at | date: "%Y-%m-%d" }}</span>
+          <span class="badge new hidden">NEW</span>
+        </div>
+        <div class="chapter-desc">{{ ch.description }}</div>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+{%- else -%}
+<div class="one-shot-cta">
+  {%- assign firstch = chapters | first -%}
+  <a class="button" href="{{ firstch.url | relative_url }}">Read story</a>
+</div>
+{%- endif -%}

@@ -1,0 +1,42 @@
+---
+layout: base
+---
+{%- assign s = site.stories | where: 'slug', page.story | first -%}
+{%- assign chapters = site.chapters | where: 'story', page.story | sort: 'posted_at' | reverse -%}
+{%- assign idx = 0 -%}
+{%- for c in chapters -%}
+  {%- if c.url == page.url -%}{%- assign idx = forloop.index0 -%}{%- endif -%}
+{%- endfor -%}
+{%- assign prev = chapters[idx | plus: 1] -%}
+{%- assign next = chapters[idx | minus: 1] -%}
+
+<article class="chapter">
+  <header class="chapter-header">
+    <h1 class="story-title">{{ s.title }}</h1>
+    {%- if s.type == "series" -%}<h2 class="chapter-num">Chapter {{ page.chapter }}</h2>{%- endif -%}
+    <div class="pill-row">
+      {%- if s.genre -%}<span class="pill genre">{{ s.genre }}</span>{%- endif -%}
+      {%- for tag in s.tags -%}<span class="pill tag">{{ tag }}</span>{%- endfor -%}
+    </div>
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  <nav class="chapter-nav">
+    {%- if prev -%}
+      <a class="button" href="{{ prev.url | relative_url }}">← Previous</a>
+    {%- else -%}
+      <span class="button disabled">← Previous</span>
+    {%- endif -%}
+
+    <a class="button ghost" href="{{ s.url | relative_url }}">Back to story</a>
+
+    {%- if next -%}
+      <a class="button" href="{{ next.url | relative_url }}">Next →</a>
+    {%- else -%}
+      <span class="button disabled">Next →</span>
+    {%- endif -%}
+  </nav>
+</article>

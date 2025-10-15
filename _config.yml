@@ -1,0 +1,26 @@
+title: "Stories"
+description: "Personal story collection"
+baseurl: ""
+url: ""
+
+# Collections
+collections:
+  stories:
+    output: true
+    permalink: /stories/:slug/
+  chapters:
+    output: true
+    permalink: /stories/:path/
+
+# Chapters are stored under _chapters/<story-slug>/ch/<n>.md
+# With permalink /stories/:path/ this yields /stories/<slug>/ch/<n>/
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  hard_wrap: false
+
+exclude:
+  - README.md
+  - node_modules
+  - Gemfile.lock

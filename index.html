@@ -1,0 +1,62 @@
+---
+layout: base
+title: Home
+---
+
+<section class="controls">
+  <input type="search" id="searchInput" placeholder="Search stories…" aria-label="Search stories">
+  <div class="filters">
+    <select id="genreFilter" aria-label="Filter by genre">
+      <option value="">All genres</option>
+      {%- assign genres = site.stories | map: 'genre' | uniq | sort -%}
+      {%- for g in genres -%}
+        {%- if g and g != '' -%}<option value="{{ g | downcase }}">{{ g }}</option>{%- endif -%}
+      {%- endfor -%}
+    </select>
+    <select id="tagFilter" aria-label="Filter by tag">
+      <option value="">All tags</option>
+      {%- assign all_tags = '' | split: '' -%}
+      {%- for s in site.stories -%}
+        {%- if s.tags -%}
+          {%- for t in s.tags -%}
+            {%- unless all_tags contains t -%}{%- assign all_tags = all_tags | push: t -%}{%- endunless -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+      {%- assign all_tags = all_tags | sort -%}
+      {%- for t in all_tags -%}
+        <option value="{{ t | downcase }}">{{ t }}</option>
+      {%- endfor -%}
+    </select>
+  </div>
+</section>
+
+<section id="storyList">
+  {%- for story in site.stories -%}
+    {%- assign chs = site.chapters | where: 'story', story.slug | sort: 'posted_at' | reverse -%}
+    {%- assign latest = chs | first -%}
+    <article class="story-card"
+             data-title="{{ story.title | downcase }}"
+             data-summary="{{ story.summary | downcase }}"
+             data-genre="{{ story.genre | downcase }}"
+             data-tags="{{ story.tags | join: ',' | downcase }}"
+             data-latest="{{ latest.posted_at | default: story.date | date_to_xmlschema }}">
+      <img class="cover" src="{{ story.cover | relative_url }}" alt="Cover of {{ story.title }}">
+      <div class="card-body">
+        <div class="pill-row">
+          <span class="pill type">{{ story.type }}</span>
+          {%- if story.genre -%}<span class="pill genre">{{ story.genre }}</span>{%- endif -%}
+          {%- for tag in story.tags -%}<span class="pill tag">{{ tag }}</span>{%- endfor -%}
+        </div>
+        <h2 class="story-title"><a href="{{ story.url | relative_url }}">{{ story.title }}</a></h2>
+        <p class="summary">{{ story.summary }}</p>
+        <div class="meta">
+          <span>Last update: <span class="latest-date">{{ latest.posted_at | default: story.date | date: "%Y-%m-%d" }}</span></span>
+          <span class="badge new hidden">NEW</span>
+        </div>
+      </div>
+    </article>
+  {%- endfor -%}
+</section>
+
+<button id="loadMore" class="load-more">Load more</button>
