@@ -2,15 +2,17 @@
 layout: base
 ---
 {%- assign s = site.stories | where: 'slug', page.story | first -%}
-{%- assign chapters_by_num = site.chapters | where: 'story', page.story | sort: 'chapter' -%}
+{%- assign siblings = site.chapters | where: 'story', page.story -%}
 
-{%- assign idx = 0 -%}
-{%- for c in chapters_by_num -%}
-  {%- if c.url == page.url -%}{%- assign idx = forloop.index0 -%}{%- endif -%}
-{%- endfor -%}
+{%- assign prev = siblings
+  | where_exp: 'it', 'it.chapter < page.chapter'
+  | sort: 'chapter'
+  | last -%}
 
-{%- assign prev = chapters_by_num[idx | minus: 1] -%}
-{%- assign next = chapters_by_num[idx | plus: 1] -%}
+{%- assign next = siblings
+  | where_exp: 'it', 'it.chapter > page.chapter'
+  | sort: 'chapter'
+  | first -%}
 
 <article class="chapter">
   <header class="chapter-header">
@@ -27,24 +29,24 @@ layout: base
   </div>
 
   {% if s.type == "one-shot" %}
-  <nav class="chapter-nav single">
-    <a class="button ghost" href="{{ '/' | relative_url }}">Back to home</a>
-  </nav>
-{% else %}
-  <nav class="chapter-nav">
-    {% if prev %}
-      <a class="button" href="{{ prev.url | relative_url }}">← Previous</a>
-    {% else %}
-      <span class="button disabled">← Previous</span>
-    {% endif %}
-
-    <a class="button ghost" href="{{ s.url | relative_url }}">Back to story</a>
-
-    {% if next %}
-      <a class="button" href="{{ next.url | relative_url }}">Next →</a>
-    {% else %}
-      <span class="button disabled">Next →</span>
-    {% endif %}
-  </nav>
-{% endif %}
+    <nav class="chapter-nav single">
+      <a class="button ghost" href="{{ '/' | relative_url }}">Back to home</a>
+    </nav>
+  {% else %}
+    <nav class="chapter-nav">
+      {% if prev %}
+        <a class="button" href="{{ prev.url | relative_url }}" rel="prev">← Previous</a>
+      {% else %}
+        <span class="button disabled">← Previous</span>
+      {% endif %}
+  
+      <a class="button ghost" href="{{ s.url | relative_url }}">Back to story</a>
+  
+      {% if next %}
+        <a class="button" href="{{ next.url | relative_url }}" rel="next">Next →</a>
+      {% else %}
+        <span class="button disabled">Next →</span>
+      {% endif %}
+    </nav>
+  {% endif %}
 </article>
