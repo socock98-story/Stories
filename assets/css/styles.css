@@ -130,6 +130,14 @@ select{
 .button.ghost{ background:transparent; }
 .button.disabled{ opacity:.4; pointer-events:none; }
 
+.chapter-meta {
+  margin-top: 6px;
+}
+.word-count {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
 @media (max-width: 720px){
   .story-card{ flex-direction:column; }
   .story-hero{ flex-direction:column; }
