@@ -9,8 +9,8 @@
   --shadow: 0 8px 20px rgba(0,0,0,.35);
   --radius: 16px;
   --maxw: clamp(320px, 60vw, 900px);
-  --cover-w: 160px;  /* base width for homepage cards */
-  --cover-h: 120px;  /* base height (keeps Y constant) */
+  --cover-w: 200px;  /* base width for homepage cards */
+  --cover-h: 170px;  /* base height (keeps Y constant) */
 }
 
 * { box-sizing: border-box; }
@@ -54,9 +54,9 @@ select{
 .story-card:hover{ transform: translateY(-2px); background:#1a2030; }
 /* Homepage cards */
 .story-card .cover{
-  width: calc(var(--cover-w) * 1.3); /* +30% on X */
+  width: var(--cover-w); /* +30% on X */
   height: var(--cover-h);            /* Y unchanged */
-  object-fit: cover;                 /* crop to fit the wider box */
+  object-fit: none;                 /* crop to fit the wider box */
   border-radius: 12px;
   flex-shrink: 0;
   /* ensure aspect-ratio doesn’t override this */
