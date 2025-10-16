@@ -56,7 +56,7 @@ select{
 .story-card .cover{
   width: var(--cover-w); /* +30% on X */
   height: var(--cover-h);            /* Y unchanged */
-  object-fit: none;                 /* crop to fit the wider box */
+  object-fit: contain;                 /* crop to fit the wider box */
   border-radius: 12px;
   flex-shrink: 0;
   /* ensure aspect-ratio doesn’t override this */
