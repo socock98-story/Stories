@@ -5,7 +5,7 @@ slug: "camping-military-guys"
 type: "one-shot"
 genre: "Camping"
 tags: ["military","straight to gay", "first time", "group", "big cock", "hunk", "outdoor", "breeding"]
-cover: "/assets/covers/camping-military-guy.png"
+cover: "/assets/covers/camping-military-guys.png"
 summary: "I met strangers near my camp, but we got close, fast."
 permalink: /stories/camping-military-guy/
 ---
