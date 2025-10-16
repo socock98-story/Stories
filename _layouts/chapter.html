@@ -23,6 +23,9 @@ layout: base
       {%- if s.genre -%}<span class="pill genre">{{ s.genre }}</span>{%- endif -%}
       {%- for tag in s.tags -%}<span class="pill tag">{{ tag }}</span>{%- endfor -%}
     </div>
+    <div class="chapter-meta">
+      <span class="word-count" data-wordcount></span>
+    </div>
   </header>
 
   <div class="prose">
