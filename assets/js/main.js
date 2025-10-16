@@ -123,4 +123,22 @@
       else badge.classList.add('hidden');
     }
   });
+
+  // ----- Word count on chapter pages -----
+  (function(){
+    var prose = document.querySelector('.chapter .prose');
+    var target = document.querySelector('[data-wordcount]');
+    if(!prose || !target) return;
+
+    // Get visible text, normalize whitespace, count tokens
+    var text = prose.textContent || '';
+    // collapse whitespace
+    text = text.replace(/\s+/g, ' ').trim();
+    // split on spaces and filter empties
+    var words = text.length ? text.split(' ').filter(Boolean) : [];
+    var count = words.length;
+
+    // Write it out (e.g., "1,234 words")
+    target.textContent = count.toLocaleString() + ' words';
+  })();
 })();
